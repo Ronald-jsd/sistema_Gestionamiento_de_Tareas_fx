@@ -4,6 +4,12 @@
 
 Sistema de gestión de tareas desarrollado con JavaFX y Spring Boot. La aplicación permite crear, leer, actualizar y eliminar tareas, asignando responsables y estado a cada una de ellas. Ofrece funcionalidades adicionales para consultar la cantidad de tareas por estado.
 
+![Gestor de Tareas](assets/gestor-tareas1.png)
+
+## Pantalla Principal
+
+La interfaz principal permite visualizar, crear, editar y eliminar tareas de forma intuitiva. El sistema muestra una tabla con todas las tareas registradas y un formulario para gestionar nuevas tareas.
+
 ## Características
 
 - Crear nuevas tareas con nombre, responsable y estado
