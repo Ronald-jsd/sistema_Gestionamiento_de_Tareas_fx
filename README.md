@@ -20,7 +20,7 @@ La interfaz principal permite visualizar, crear, editar y eliminar tareas de for
 - Consultar cantidad total de tareas
 - Interfaz gráfica moderna y responsiva con JavaFX
 - Integración con Spring Boot para gestión de inyección de dependencias
-- Base de datos embebida H2 con persistencia
+- Base de datos PostgreSQL
 
 ## Requisitos
 
