@@ -1,4 +1,4 @@
-package com.ronald.app.prueba.Controller;
+package com.ronald.app.prueba.controller;
 
 import com.ronald.app.prueba.model.Estado;
 import com.ronald.app.prueba.model.Tarea;
@@ -6,12 +6,10 @@ import com.ronald.app.prueba.service.ITareaService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +19,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-public class IndexControlador implements Initializable {
-
+public class IndexController implements Initializable {
 
     private static final Logger logger =
-            LoggerFactory.getLogger(IndexControlador.class);
+            LoggerFactory.getLogger(IndexController.class);
 
     private final ObservableList<Tarea> tareaObservableList =
             FXCollections.observableArrayList();
-
 
     @Autowired
     private ITareaService iTareaService;
@@ -58,7 +54,7 @@ public class IndexControlador implements Initializable {
     @FXML
     private ComboBox<Estado> estadoCBX;
 
-    private Long idTareaInterno;
+    private static final String TITLE_BOX_INFO = "Información";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,7 +84,7 @@ public class IndexControlador implements Initializable {
         estadoCBX.setValue(null);
     }
 
-    private void listarTareas() {
+    public void listarTareas() {
         logger.info("Ejecutando listado de tareas");
 
         tareaObservableList.clear();
@@ -96,7 +92,7 @@ public class IndexControlador implements Initializable {
         tareaTabla.setItems(tareaObservableList);
     }
 
-    public void agregarTarea(ActionEvent actionEvent) {
+    public void agregarTarea() {
         if (tareaTexto.getText().isBlank()) {
             mostrarMensaje("Error de validación",
                     "Debe proporcionar una tarea.");
@@ -108,7 +104,7 @@ public class IndexControlador implements Initializable {
         guardar(tarea, "Tarea guardada correctamente.");
     }
 
-    public void editarBoton(ActionEvent actionEvent) {
+    public void editarBoton() {
         Tarea tareaSeleccionada =
                 tareaTabla.getSelectionModel().getSelectedItem();
 
@@ -128,7 +124,7 @@ public class IndexControlador implements Initializable {
                 "Tarea modificada correctamente.");
     }
 
-    public void eliminarBoton(ActionEvent actionEvent) {
+    public void eliminarBoton() {
         Tarea tarea =
                 tareaTabla.getSelectionModel().getSelectedItem();
 
@@ -138,23 +134,21 @@ public class IndexControlador implements Initializable {
             return;
         }
 
-        logger.info("Registro a eliminar: " + tarea);
-
+        logger.info("Registro a eliminar: {} ", tarea);
         iTareaService.eliminarTarea(tarea.getId());
 
-        mostrarMensaje("Información",
+        mostrarMensaje(TITLE_BOX_INFO,
                 "Tarea eliminada correctamente.");
 
-        limpiarFormulario();
+        limpiarFormularioAction();
         listarTareas();
     }
 
-    public void cargarTareaFormulario(MouseEvent mouseEvent) {
+    public void cargarTareaFormulario() {
         Tarea tarea =
                 tareaTabla.getSelectionModel().getSelectedItem();
 
         if (tarea != null) {
-            idTareaInterno = tarea.getId();
             tareaTexto.setText(tarea.getNombreTarea());
             responsableTexto.setText(tarea.getResponsable());
             estadoCBX.setValue((tarea.getEstado()));
@@ -165,7 +159,7 @@ public class IndexControlador implements Initializable {
         if (tareaTexto.getText().isBlank()
                 || responsableTexto.getText().isBlank()
                 || estadoCBX.getValue() == null) {
-            mostrarMensaje("Información",
+            mostrarMensaje(TITLE_BOX_INFO,
                     "Debe completar todos los campos.");
             return tarea;
         }
@@ -179,45 +173,44 @@ public class IndexControlador implements Initializable {
     private void guardar(Tarea tarea, String mensaje) {
         iTareaService.guardarTarea(tarea);
 
-        mostrarMensaje("Información", mensaje);
-        limpiarFormulario();
+        mostrarMensaje(TITLE_BOX_INFO, mensaje);
+        limpiarFormularioAction();
         listarTareas();
     }
 
-    private void limpiarFormulario() {
+    private void limpiarFormularioAction() {
         tareaTexto.clear();
         responsableTexto.clear();
 
         estadoCBX.setValue(null);
         estadoCBX.getSelectionModel().clearSelection();
-        idTareaInterno = null;
     }
 
-    public void limpiarFormulario(ActionEvent actionEvent) {
-        limpiarFormulario();
+    public void limpiarFormulario( ) {
+        this.limpiarFormularioAction();
     }
 
-    public void mostrarTareasPendientesBtn(ActionEvent actionEvent) {
+    public void mostrarTareasPendientesBtn() {
         Long c = this.iTareaService.cantidadTareasByEstado(Estado.PENDIENTE);
         mostrarMensaje("Aviso", "Cantidad tareas pendientes: " + c);
     }
 
-    public void mostrarTareasEnProcesoBtn(ActionEvent actionEvent) {
+    public void mostrarTareasEnProcesoBtn() {
         Long c = this.iTareaService.cantidadTareasByEstado(Estado.EN_PROCESO);
         mostrarMensaje("Aviso", "Cantidad tareas en proceso: " + c);
     }
 
-    public void mostrarTareasFinalizadasBtn(ActionEvent actionEvent) {
+    public void mostrarTareasFinalizadasBtn() {
         Long c = this.iTareaService.cantidadTareasByEstado(Estado.FINALIZADO);
         mostrarMensaje("Aviso", "Cantidad tareas finalizadas: " + c);
     }
 
-    public void mostrarTareasTotalesBtn(ActionEvent actionEvent) {
+    public void mostrarTareasTotalesBtn() {
         Long c = this.iTareaService.cantidadTareasByEstado(null);
         mostrarMensaje("Aviso", "Cantidad total de tareas: " + c);
     }
 
-    private void mostrarMensaje(String titulo, String mensaje) {
+    protected  void mostrarMensaje(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);

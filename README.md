@@ -65,7 +65,13 @@ src/
 │           └── index.fxml                   # Vista principal JavaFX
 └── test/
     └── java/com/ronald/app/prueba/
-        └── PruebaApplicationTests.java      # Tests de la aplicación
+        └── controller
+              └── IndexControllerTest # Test unitario del controller
+        └── repository
+              └── TareaRepository # Test del repositorio
+        └── service
+              └── TareaServiceImplIT # Test de integración del service
+              └── TareaServiceImplTest # Test unitario del service
 ```
 
 ## Instalación y Configuración
@@ -249,15 +255,6 @@ Las contribuciones son bienvenidas. Para contribuir:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abra un Pull Request
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT. Consulte el archivo LICENSE para más detalles.
-
-## Contacto
-
-Ronald - ronald.santi.jd@gmail.com
-
-URL del Proyecto: [https://github.com/tu-usuario/sistema-tareas-javafx](https://github.com/tu-usuario/sistema-tareas-javafx)
 
 ## Resolución de Problemas
 
@@ -284,13 +281,11 @@ Asegúrese de que:
 - JavaFX está correctamente configurado en el pom.xml
 - Los módulos de JavaFX están disponibles en su sistema
 
-## Agradecimientos
 
-- Spring Boot por proporcionar un framework robusto
-- JavaFX por la interfaz gráfica moderna
-- PostgreSQL Database por la base de datos fiable
-- Lombok por reducir boilerplate code
+## Contacto
 
+Ronald - ronald.santi.jd@gmail.com
 
+URL del Proyecto: [https://github.com/tu-usuario/sistema-tareas-javafx](https://github.com/tu-usuario/sistema-tareas-javafx)
 
 
