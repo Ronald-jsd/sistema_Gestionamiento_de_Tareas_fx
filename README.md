@@ -74,6 +74,10 @@ src/
               └── TareaServiceImplTest # Test unitario del service
 ```
 
+## Arquitectura - Diagrama
+![Gestor de Tareas](assets/gestor-tareas-arquitectura.gif)
+
+
 ## Instalación y Configuración
 
 ### 1. Clonar el repositorio
